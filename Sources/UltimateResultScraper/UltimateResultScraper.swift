@@ -7,11 +7,11 @@ public class UltimateResultScraper {
   var html: String? = nil
   var gameScraper: GenericGameScraper? = nil
   
-  init(html: String) {
+  public init(html: String) {
     self.html = html
   }
   
-  init(url: String) {
+  public init(url: String) {
     self.url = url
   }
   
@@ -24,7 +24,7 @@ public class UltimateResultScraper {
     return contents
   }
   
-  func scrapeGame() async throws -> ScrapedGame? {
+  public func scrapeGame() async throws -> ScrapedGame? {
     if html == nil {
       if url == nil {
         throw "No page URL provided"
