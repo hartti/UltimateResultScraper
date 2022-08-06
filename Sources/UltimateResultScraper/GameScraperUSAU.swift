@@ -16,7 +16,7 @@ class GameScraperUSAU: GenericGameScraper {
     self.doc = doc
   }
   
-  override func parseGame() -> ParsedGame? {
+  override func scrapeGame() -> ScrapedGame? {
     let homeTeamNameId = "CT_Main_0_lblHomeTeam"
     let awayTeamNameId = "CT_Main_0_lblAwayTeam"
     let homeTeamScoreId = "CT_Main_0_lblHomeScore"
@@ -49,7 +49,7 @@ class GameScraperUSAU: GenericGameScraper {
       let homeTeamRoster = parseRosterUSAU(homeTeam: true)
       let awayTeamRoster = parseRosterUSAU(homeTeam: false)
       
-      return ParsedGame(date: date, homeTeamName: homeTeamName, homeTeamScore: homeTeamScore, homeTeamRoster: homeTeamRoster, awayTeamName: awayTeamName, awayTeamScore: awayTeamScore, awayTeamRoster: awayTeamRoster)
+      return ScrapedGame(date: date, homeTeamName: homeTeamName, homeTeamScore: homeTeamScore, homeTeamRoster: homeTeamRoster, awayTeamName: awayTeamName, awayTeamScore: awayTeamScore, awayTeamRoster: awayTeamRoster)
       
     } catch Exception.Error(_, let message) {
       print(message)
@@ -59,11 +59,11 @@ class GameScraperUSAU: GenericGameScraper {
     return nil
   }
   
-  func parseRosterUSAU(homeTeam: Bool) -> [ParsedPlayer] {
+  func parseRosterUSAU(homeTeam: Bool) -> [ScrapedPlayer] {
     let homeTeamRosterListId = "CT_Main_0_gvHomeList"
     let awayTeamRosterListId = "CT_Main_0_gvAwayList"
     
-    var players: [ParsedPlayer] = []
+    var players: [ScrapedPlayer] = []
     
     do {
       let teamTable = try doc.getElementById(homeTeam ? homeTeamRosterListId : awayTeamRosterListId)
@@ -73,7 +73,7 @@ class GameScraperUSAU: GenericGameScraper {
           let words = playerString.split(separator: " ")
           let number = words[0].trimmingCharacters(in: ["#"])
           let name = words[1..<words.count].joined(separator: " ")
-          let temp = ParsedPlayer(name: name, jerseyNumber: number)
+          let temp = ScrapedPlayer(name: name, jerseyNumber: number)
           players.append(temp)
         }
       }

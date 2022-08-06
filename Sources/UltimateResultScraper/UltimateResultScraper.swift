@@ -24,7 +24,7 @@ public class UltimateResultScraper {
     return contents
   }
   
-  func parseGame() async throws -> ParsedGame? {
+  func scrapeGame() async throws -> ScrapedGame? {
     if html == nil {
       if url == nil {
         throw "No page URL provided"
@@ -43,12 +43,12 @@ public class UltimateResultScraper {
     } else {
       throw "Unknown page format / source"
     }
-    return gameScraper!.parseGame()
+    return gameScraper!.scrapeGame()
   }
 }
 
 class GenericGameScraper {
-  func parseGame() -> ParsedGame? {
+  func scrapeGame() -> ScrapedGame? {
     return nil
   }
 }

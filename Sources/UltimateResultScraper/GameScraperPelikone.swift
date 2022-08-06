@@ -15,7 +15,7 @@ class GameScraperPelikone: GenericGameScraper {
     self.doc = doc
   }
   
-  override func parseGame() -> ParsedGame? {
+  override func scrapeGame() -> ScrapedGame? {
     let titleMatcher = /(.+)\ \-\ (.+)&nbsp;&nbsp;&nbsp;&nbsp;(\d+)\ \-\ (\d+)/
     
     do {
@@ -25,7 +25,7 @@ class GameScraperPelikone: GenericGameScraper {
       let awayTeamRoster = parseRosterPelikone(homeTeam: false)
       
       if let items = title.wholeMatch(of: titleMatcher) {
-        return ParsedGame(homeTeamName: String(items.1), homeTeamScore: Int(items.3), homeTeamRoster: homeTeamRoster, awayTeamName: String(items.2), awayTeamScore: Int(items.4), awayTeamRoster: awayTeamRoster)
+        return ScrapedGame(homeTeamName: String(items.1), homeTeamScore: Int(items.3), homeTeamRoster: homeTeamRoster, awayTeamName: String(items.2), awayTeamScore: Int(items.4), awayTeamRoster: awayTeamRoster)
       }
       return nil
     } catch Exception.Error(_, let message) {
@@ -36,11 +36,11 @@ class GameScraperPelikone: GenericGameScraper {
     return nil
   }
   
-  func parseRosterPelikone(homeTeam: Bool) -> [ParsedPlayer] {
+  func parseRosterPelikone(homeTeam: Bool) -> [ScrapedPlayer] {
     let homeTeamClass = "home"
     let awayTeamClass = "guest"
     
-    var players: [ParsedPlayer] = []
+    var players: [ScrapedPlayer] = []
     
     do {
       let teamTest = try doc.getElementsByClass(homeTeam ? homeTeamClass : awayTeamClass).first()!.parents()[1]
@@ -52,7 +52,7 @@ class GameScraperPelikone: GenericGameScraper {
         }
         let number = try cells[0].html()
         let name = try cells[0].select("a").html()
-        let temp = ParsedPlayer(name: name, jerseyNumber: number)
+        let temp = ScrapedPlayer(name: name, jerseyNumber: number)
         players.append(temp)
       }
     } catch Exception.Error(_, let message) {

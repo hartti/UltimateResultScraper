@@ -7,24 +7,24 @@
 
 import Foundation
 
-public struct ParsedGame {
+public struct ScrapedGame {
   let date: Date?
-  let homeTeam: ParsedTeam
-  let awayTeam: ParsedTeam
+  let homeTeam: ScrapedTeam
+  let awayTeam: ScrapedTeam
   
-  init(date: Date? = nil, homeTeamName: String, homeTeamScore: Int?, homeTeamRoster: [ParsedPlayer]? = nil, awayTeamName: String, awayTeamScore: Int?, awayTeamRoster: [ParsedPlayer]? = nil) {
+  init(date: Date? = nil, homeTeamName: String, homeTeamScore: Int?, homeTeamRoster: [ScrapedPlayer]? = nil, awayTeamName: String, awayTeamScore: Int?, awayTeamRoster: [ScrapedPlayer]? = nil) {
     self.date = date
-    homeTeam = ParsedTeam(name: homeTeamName, score: homeTeamScore, roster: homeTeamRoster)
-    awayTeam = ParsedTeam(name: awayTeamName, score: awayTeamScore, roster: awayTeamRoster)
+    homeTeam = ScrapedTeam(name: homeTeamName, score: homeTeamScore, roster: homeTeamRoster)
+    awayTeam = ScrapedTeam(name: awayTeamName, score: awayTeamScore, roster: awayTeamRoster)
   }
 }
 
-public struct ParsedTeam {
+public struct ScrapedTeam {
   let name: String
   let score: Int?
-  let roster: [ParsedPlayer]
+  let roster: [ScrapedPlayer]
   
-  init(name: String, score: Int?, roster: [ParsedPlayer]? = nil) {
+  init(name: String, score: Int?, roster: [ScrapedPlayer]? = nil) {
     self.name = name
     self.score = score
     if roster != nil {
@@ -35,7 +35,7 @@ public struct ParsedTeam {
   }
 }
 
-public struct ParsedPlayer {
+public struct ScrapedPlayer {
   let name: String
   let jerseyNumber: String    // to allow double zero
   let assists: Int?
