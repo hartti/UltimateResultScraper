@@ -8,9 +8,9 @@
 import Foundation
 
 public struct ScrapedGame {
-  let date: Date?
-  let homeTeam: ScrapedTeam
-  let awayTeam: ScrapedTeam
+  public let date: Date?
+  public let homeTeam: ScrapedTeam
+  public let awayTeam: ScrapedTeam
   
   init(date: Date? = nil, homeTeamName: String, homeTeamScore: Int?, homeTeamRoster: [ScrapedPlayer]? = nil, awayTeamName: String, awayTeamScore: Int?, awayTeamRoster: [ScrapedPlayer]? = nil) {
     self.date = date
@@ -20,9 +20,9 @@ public struct ScrapedGame {
 }
 
 public struct ScrapedTeam {
-  let name: String
-  let score: Int?
-  let roster: [ScrapedPlayer]
+  public let name: String
+  public let score: Int?
+  public let roster: [ScrapedPlayer]
   
   init(name: String, score: Int?, roster: [ScrapedPlayer]? = nil) {
     self.name = name
@@ -36,11 +36,11 @@ public struct ScrapedTeam {
 }
 
 public struct ScrapedPlayer {
-  let name: String
-  let jerseyNumber: String    // to allow double zero
-  let assists: Int?
-  let goals: Int?
-  let totalPoints: Int?
+  public let name: String
+  public let jerseyNumber: String    // to allow double zero
+  public let assists: Int?
+  public let goals: Int?
+  public let totalPoints: Int?
   
   init(name: String, jerseyNumber: String, assists: Int? = nil, goals: Int? = nil, totalPoints: Int? = nil) {
     self.name = name
