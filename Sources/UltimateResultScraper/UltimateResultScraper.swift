@@ -45,6 +45,12 @@ public class UltimateResultScraper {
     }
     return gameScraper!.scrapeGame()
   }
+  
+  static func urlSupported(_ url: String) -> Bool {
+    return (url.starts(with: "https://ultimate.fi/pelikone/?view=gameplay") && url != "https://ultimate.fi/pelikone/?view=gameplay") ||
+    (url.starts(with: "https://play.usaultimate.org/teams/events/match_report/?") && url != "https://play.usaultimate.org/teams/events/match_report/?") ||
+    (url.starts(with: "https://results.wfdf.sport/") && url != "https://results.wfdf.sport/")
+  }
 }
 
 class GenericGameScraper {
