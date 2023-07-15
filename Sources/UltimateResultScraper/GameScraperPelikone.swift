@@ -51,7 +51,8 @@ class GameScraperPelikone: GameScraper {
           continue
         }
         let number = try cells[0].html()
-        let name = try cells[1].select("a").html()
+        let tempName = try cells[1].select("a").html()
+        let name = tempName.replacingOccurrences(of: "&nbsp;", with: " ")
         let temp = ScrapedPlayer(name: name, jerseyNumber: number)
         players.append(temp)
       }
