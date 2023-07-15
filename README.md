@@ -8,6 +8,7 @@ Create an instance of the scraper either using an URL or HTML-contents and call 
 - Team names
 - Team scores
 - Player names and jersey numbers
+
 The package returns a Swift struct (ParsedGame) which contains team1 (usually home team) and team2 (usually away team) with name and score and roster array. If certain data was not found that variable is then nil (Optional).
 
 ## Future improvements
