@@ -38,7 +38,7 @@ public class UltimateResultScraper {
     let doc: Document = try SwiftSoup.parse(html)
     if html.contains("usaultimate.org") {
       gameScraper = GameScraperUSAU(doc: doc)
-    } else if html.contains("wucc.sport") || html.contains("ultimate.fi/pelikone") {
+    } else if html.contains("wucc.sport") || html.contains("ultimate.fi/pelikone") || html.contains("wfdf.sport") {
       gameScraper = GameScraperPelikone(doc: doc)
     } else {
       throw Exception.Error(type: ExceptionType.UnknownFormatException, Message: "Unknown page format / source")   
