@@ -21,11 +21,11 @@ class GameScraperPelikone: GenericGameScraper {
     do {
       let title = try doc.select("h1").first()!.html()
       
-      let homeTeamRoster = parseRosterPelikone(homeTeam: true)
-      let awayTeamRoster = parseRosterPelikone(homeTeam: false)
+      let team1Roster = parseRosterPelikone(forTeam1: true)
+      let team2Roster = parseRosterPelikone(forTeam1: false)
       
       if let items = title.wholeMatch(of: titleMatcher) {
-        return ScrapedGame(homeTeamName: String(items.1), homeTeamScore: Int(items.3), homeTeamRoster: homeTeamRoster, awayTeamName: String(items.2), awayTeamScore: Int(items.4), awayTeamRoster: awayTeamRoster)
+        return ScrapedGame(team1Name: String(items.1), team1Score: Int(items.3), team1Roster: team1Roster, team2Name: String(items.2), team2Score: Int(items.4), team2Roster: team2Roster)
       }
       return nil
     } catch Exception.Error(_, let message) {
@@ -36,14 +36,14 @@ class GameScraperPelikone: GenericGameScraper {
     return nil
   }
   
-  func parseRosterPelikone(homeTeam: Bool) -> [ScrapedPlayer] {
-    let homeTeamClass = "home"
-    let awayTeamClass = "guest"
+  func parseRosterPelikone(forTeam1: Bool) -> [ScrapedPlayer] {
+    let team1Class = "home"
+    let team2Class = "guest"
     
     var players: [ScrapedPlayer] = []
     
     do {
-      let teamTest = try doc.getElementsByClass(homeTeam ? homeTeamClass : awayTeamClass).first()!.parents()[1]
+      let teamTest = try doc.getElementsByClass(forTeam1 ? team1Class : team2Class).first()!.parents()[1]
       let rows = try teamTest.select("tr")
       for row in rows {
         let cells = try row.select("td")

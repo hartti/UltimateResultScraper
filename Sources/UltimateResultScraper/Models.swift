@@ -9,13 +9,13 @@ import Foundation
 
 public struct ScrapedGame {
   public let date: Date?
-  public let homeTeam: ScrapedTeam
-  public let awayTeam: ScrapedTeam
+  public let team1: ScrapedTeam
+  public let team2: ScrapedTeam
   
-  init(date: Date? = nil, homeTeamName: String, homeTeamScore: Int?, homeTeamRoster: [ScrapedPlayer]? = nil, awayTeamName: String, awayTeamScore: Int?, awayTeamRoster: [ScrapedPlayer]? = nil) {
+  init(date: Date? = nil, team1Name: String, team1Score: Int?, team1Roster: [ScrapedPlayer]? = nil, team2Name: String, team2Score: Int?, team2Roster: [ScrapedPlayer]? = nil) {
     self.date = date
-    homeTeam = ScrapedTeam(name: homeTeamName, score: homeTeamScore, roster: homeTeamRoster)
-    awayTeam = ScrapedTeam(name: awayTeamName, score: awayTeamScore, roster: awayTeamRoster)
+    team1 = ScrapedTeam(name: team1Name, score: team1Score, roster: team1Roster)
+    team2 = ScrapedTeam(name: team2Name, score: team2Score, roster: team2Roster)
   }
 }
 

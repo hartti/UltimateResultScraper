@@ -17,10 +17,10 @@ class GameScraperUSAU: GenericGameScraper {
   }
   
   override func scrapeGame() -> ScrapedGame? {
-    let homeTeamNameId = "CT_Main_0_lblHomeTeam"
-    let awayTeamNameId = "CT_Main_0_lblAwayTeam"
-    let homeTeamScoreId = "CT_Main_0_lblHomeScore"
-    let awayTeamScoreId = "CT_Main_0_lblAwayScore"
+    let team1NameId = "CT_Main_0_lblHomeTeam"
+    let team2NameId = "CT_Main_0_lblAwayTeam"
+    let team1ScoreId = "CT_Main_0_lblHomeScore"
+    let team2ScoreId = "CT_Main_0_lblAwayScore"
     
     let nameWithRankMatcher = /(.+)\ \(\d+\)/
     let dateMatcher = Regex {
@@ -30,26 +30,26 @@ class GameScraperUSAU: GenericGameScraper {
     }
     
     do {
-      var homeTeamName = try doc.getElementById(homeTeamNameId)?.text() ?? ""
-      if let matches = homeTeamName.firstMatch(of: nameWithRankMatcher) {
-        homeTeamName = String(matches.1)
+      var team1Name = try doc.getElementById(team1NameId)?.text() ?? ""
+      if let matches = team1Name.firstMatch(of: nameWithRankMatcher) {
+        team1Name = String(matches.1)
       }
       
-      var awayTeamName = try doc.getElementById(awayTeamNameId)?.text() ?? ""
-      if let matches = awayTeamName.firstMatch(of: nameWithRankMatcher) {
-        awayTeamName = String(matches.1)
+      var team2Name = try doc.getElementById(team2NameId)?.text() ?? ""
+      if let matches = team2Name.firstMatch(of: nameWithRankMatcher) {
+        team2Name = String(matches.1)
       }
       
-      let homeTeamScore = try Int(doc.getElementById(homeTeamScoreId)?.text() ?? "")
-      let awayTeamScore = try Int(doc.getElementById(awayTeamScoreId)?.text() ?? "")
+      let team1Score = try Int(doc.getElementById(team1ScoreId)?.text() ?? "")
+      let team2Score = try Int(doc.getElementById(team2ScoreId)?.text() ?? "")
       
       let titleString = try doc.getElementsByClass("title").first()?.text() ?? ""
       let date = titleString.firstMatch(of: dateMatcher)?.1
       
-      let homeTeamRoster = parseRosterUSAU(homeTeam: true)
-      let awayTeamRoster = parseRosterUSAU(homeTeam: false)
+      let team1Roster = parseRosterUSAU(forTeam1: true)
+      let team2Roster = parseRosterUSAU(forTeam1: false)
       
-      return ScrapedGame(date: date, homeTeamName: homeTeamName, homeTeamScore: homeTeamScore, homeTeamRoster: homeTeamRoster, awayTeamName: awayTeamName, awayTeamScore: awayTeamScore, awayTeamRoster: awayTeamRoster)
+      return ScrapedGame(date: date, team1Name: team1Name, team1Score: team1Score, team1Roster: team1Roster, team2Name: team2Name, team2Score: team2Score, team2Roster: team2Roster)
       
     } catch Exception.Error(_, let message) {
       print(message)
@@ -59,14 +59,14 @@ class GameScraperUSAU: GenericGameScraper {
     return nil
   }
   
-  func parseRosterUSAU(homeTeam: Bool) -> [ScrapedPlayer] {
-    let homeTeamRosterListId = "CT_Main_0_gvHomeList"
-    let awayTeamRosterListId = "CT_Main_0_gvAwayList"
+  func parseRosterUSAU(forTeam1: Bool) -> [ScrapedPlayer] {
+    let team1RosterListId = "CT_Main_0_gvHomeList"
+    let team2RosterListId = "CT_Main_0_gvAwayList"
     
     var players: [ScrapedPlayer] = []
     
     do {
-      let teamTable = try doc.getElementById(homeTeam ? homeTeamRosterListId : awayTeamRosterListId)
+      let teamTable = try doc.getElementById(forTeam1 ? team1RosterListId : team2RosterListId)
       let rows = try teamTable?.select("tr")
       for row in rows! {
         if let playerString = try row.select("td").first()?.text() {
