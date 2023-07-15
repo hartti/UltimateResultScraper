@@ -52,7 +52,6 @@ class GameScraperPelikone: GameScraper {
         }
         let number = try cells[0].html()
         let name = try cells[0].select("a").html()
-        print(name)
         let temp = ScrapedPlayer(name: name, jerseyNumber: number)
         players.append(temp)
       }
