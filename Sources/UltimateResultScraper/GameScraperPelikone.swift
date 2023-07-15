@@ -8,7 +8,7 @@
 import Foundation
 import SwiftSoup
 
-class GameScraperPelikone: GenericGameScraper {
+class GameScraperPelikone: GameScraper {
   let doc: Document
   
   init(doc: Document) {

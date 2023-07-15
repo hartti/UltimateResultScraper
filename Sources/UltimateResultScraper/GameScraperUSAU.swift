@@ -9,7 +9,7 @@ import Foundation
 import SwiftSoup
 import RegexBuilder
 
-class GameScraperUSAU: GenericGameScraper {
+class GameScraperUSAU: GameScraper {
   let doc: Document
   
   init(doc: Document) {

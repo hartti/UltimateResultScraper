@@ -5,7 +5,7 @@ import RegexBuilder
 public class UltimateResultScraper {
   var url: String? = nil
   var html: String? = nil
-  var gameScraper: GenericGameScraper? = nil
+  var gameScraper: GameScraper? = nil
   
   public init(html: String) {
     self.html = html
@@ -27,11 +27,11 @@ public class UltimateResultScraper {
   public func scrapeGame() async throws -> ScrapedGame? {
     if html == nil {
       if url == nil {
-        throw "No page URL provided"
+        throw Exception.Error(type: ExceptionType.NoSourceException, Message: "No page URL provided")
       }
       try await html = downloadPage(url: url!)
       if html == nil {
-        throw "No page to parse"
+        throw Exception.Error(type: ExceptionType.NoSourceException, Message: "No source file found ")
       }
     }
     let html = html!
@@ -41,7 +41,7 @@ public class UltimateResultScraper {
     } else if html.contains("wucc.sport") || html.contains("ultimate.fi/pelikone") {
       gameScraper = GameScraperPelikone(doc: doc)
     } else {
-      throw "Unknown page format / source"
+      throw Exception.Error(type: ExceptionType.UnknownFormatException, Message: "Unknown page format / source")   
     }
     return gameScraper!.scrapeGame()
   }
@@ -52,13 +52,3 @@ public class UltimateResultScraper {
     (url.starts(with: "https://results.wfdf.sport/") && url != "https://results.wfdf.sport/")
   }
 }
-
-class GenericGameScraper {
-  func scrapeGame() -> ScrapedGame? {
-    return nil
-  }
-}
-
-extension String: Error {} // Enables you to throw a string
-
-
