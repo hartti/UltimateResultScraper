@@ -38,7 +38,7 @@ public class UltimateResultScraper {
     let doc: Document = try SwiftSoup.parse(html)
     if html.contains("usaultimate.org") {
       gameScraper = GameScraperUSAU(doc: doc)
-    } else if html.contains("wucc.sport") || html.contains("ultimate.fi/pelikone") || html.contains("wfdf.sport") {
+    } else if html.contains("wucc.sport") || html.contains("ultimate.fi/pelikone") || html.contains("wfdf.sport") || html.contains("ultimatefederation.eu") {
       gameScraper = GameScraperPelikone(doc: doc)
     } else {
       throw Exception.Error(type: ExceptionType.UnknownFormatException, Message: "Unknown page format / source")   
@@ -49,6 +49,7 @@ public class UltimateResultScraper {
   public static func urlSupported(_ url: String) -> Bool {
     return (url.starts(with: "https://ultimate.fi/pelikone/?view=gameplay") && url != "https://ultimate.fi/pelikone/?view=gameplay") ||
     (url.starts(with: "https://play.usaultimate.org/teams/events/match_report/?") && url != "https://play.usaultimate.org/teams/events/match_report/?") ||
-    (url.starts(with: "https://results.wfdf.sport/") && url != "https://results.wfdf.sport/")
+    (url.starts(with: "https://results.wfdf.sport/") && url != "https://results.wfdf.sport/") ||
+    (url.starts(with: "https://euc-schedule.ultimatefederation.eu/") && url != "https://euc-schedule.ultimatefederation.eu/")
   }
 }
